@@ -18,7 +18,8 @@
     * 미구현
 * 보간법을 이용한 저채널 Lidar 데이터 고채널 변환 기능 구현
     * 미구현
-
+* 지도와 Lidar 데이터 매핑
+    * 미구현
 ### Built With
 * <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white">
 
