@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import *
 import vispy.scene
 from vispy.scene import visuals
 from vispy import color
+import os
 
 class MyApp(QWidget):
     def __init__(self):
@@ -33,12 +34,15 @@ class MyApp(QWidget):
         view.camera.center = (0, 0, 0)
         self.show()
         self.meshes = []
+        object_coordinate = "Object X: 0.000000 Y: 0.000000 Z: 0.000000"
         xyztext = "X: 0.000000 Y: 0.000000 Z: 0.000000"
         self.text = visuals.Text(xyztext, color='white', anchor_x='left', parent=view, pos=(20, 30))
+        self.text2 = visuals.Text(object_coordinate, color='white', anchor_x='left', parent=view, pos=(330, 520))
         canvas.events.key_press.connect(self.on_button_press)
         canvas.events.mouse_move.connect(self.on_mouse_move)
         canvas.events.mouse_press.connect(self.on_mouse_press)
         canvas.events.mouse_move.disconnect(self.on_mouse_press)
+
     def openfile(self):
         QFileDialog.getOpenFileName(self, 'Open file', './')
 
@@ -93,7 +97,8 @@ class MyApp(QWidget):
             idx = idxs[-1] or (len(idxs) > 1 and idxs[-2])
         if idx > 0:
             self.on_click(idx - 1, self.sphere)
-            print('data coordinates :', self.data[idx])
+            data_x, data_y, data_z = self.data[idx]
+            self.text2.text = f"Object X: {data_x:0.06f} Y: {data_y:0.06f} Z: {data_z:0.06f}"
 
     def on_mouse_press(self, event):
         global pos_press
@@ -112,6 +117,7 @@ class MyApp(QWidget):
         scene_coords /= scene_coords[-1]
         x, y, z, w = scene_coords
         self.text.text = f"X: {x:0.06f} Y: {y:0.06f} Z: {z:0.06f}"
+
         self.update()
 
 if __name__ == '__main__':
